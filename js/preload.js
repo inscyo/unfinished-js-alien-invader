@@ -51,14 +51,14 @@ var loc = "01";
 
 const adventurePreload = async function () {
   cloudObjectInstanceFunction = await async function () {
-    await loadImageFolder(`../gui/userinterface/cloud/`).then((cloudImages) => {
+    await loadImageFolder(`gui/userinterface/cloud/`).then((cloudImages) => {
       if (probability() > 0.5) {
         cloudObjectInstance.push(new CloudObjects(context, cloudImages));
       }
     });
   };
 
-  await loadImage(`../gui/backgrounds/bg/${background}.png`).then(
+  await loadImage(`gui/backgrounds/bg/${background}.png`).then(
     (backgroundObjectInstanceImage) => {
       backgroundObjectInstance = new BackgroundObject(
         context,
@@ -68,7 +68,7 @@ const adventurePreload = async function () {
       );
     }
   ),
-    await loadImageFolder(`../gui/backgrounds/obj/${object}/`).then(
+    await loadImageFolder(`gui/backgrounds/obj/${object}/`).then(
       (backgroundObjectsInstanceImages) => {
         backgroundObjectsInstanceFunction = function () {
           backgroundObjectsInstance.push(
@@ -82,14 +82,14 @@ const adventurePreload = async function () {
         };
       }
     ),
-    await loadImageFolder(`../gui/players/copters/${plane}/`).then(
+    await loadImageFolder(`gui/players/copters/${plane}/`).then(
       async (playerPlane) => {
-        await loadImage(`../gui/bullets/${bullet}.png`).then(
+        await loadImage(`gui/bullets/${bullet}.png`).then(
           async (playerPlaneBullet) => {
             playerBulletImage = await playerPlaneBullet;
-            await loadImage(`../gui/players/bars/energy.png`).then(
+            await loadImage(`gui/players/bars/energy.png`).then(
               async (playerPlaneEnergy) => {
-                await loadImage(`../gui/players/bars/people.png`).then(
+                await loadImage(`gui/players/bars/people.png`).then(
                   async (recuePeople) => {
                     planeObjectInstance = new PlaneObject(
                       context,
@@ -125,25 +125,23 @@ const adventurePreload = async function () {
       }
     }),
     (enemyPlaneObjectInstanceFunction = await async function () {
-      await loadImageFolder(`../gui/enemies/planes/`).then(
-        async (enemyPlane) => {
-          enemyPlaneObjectInstance.push(
-            new EnemyVehicleSkyObject(
-              context,
-              enemyPlane,
-              Math.floor(Math.random() * primaryWidth),
-              probability() > 0.6
-                ? Math.floor(Math.random() * 6) + 1 * 2
-                : Math.floor(Math.random() * 10) + 2.5
-            )
-          );
-        }
-      );
+      await loadImageFolder(`gui/enemies/planes/`).then(async (enemyPlane) => {
+        enemyPlaneObjectInstance.push(
+          new EnemyVehicleSkyObject(
+            context,
+            enemyPlane,
+            Math.floor(Math.random() * primaryWidth),
+            probability() > 0.6
+              ? Math.floor(Math.random() * 6) + 1 * 2
+              : Math.floor(Math.random() * 10) + 2.5
+          )
+        );
+      });
     });
 
   enemyTankObjectInstanceFunction = await async function () {
-    await loadImageFolder(`../gui/enemies/tanks/`).then(async (enemyTanks) => {
-      await loadImage(`../gui/bullets/08.png`).then((enemyTanksBullet) => {
+    await loadImageFolder(`gui/enemies/tanks/`).then(async (enemyTanks) => {
+      await loadImage(`gui/bullets/08.png`).then((enemyTanksBullet) => {
         if (probability() > 0.6) {
           enemyTankObjectInstance.push(
             new EnemyVehicleLandObject(context, enemyTanks, enemyTanksBullet)
@@ -153,31 +151,29 @@ const adventurePreload = async function () {
     });
   };
 
-  await loadImageFolder(`../gui/userinterface/explosion/`).then(
+  await loadImageFolder(`gui/userinterface/explosion/`).then(
     async (explosionImages) => {
       enemyExplosionInstance = new ExplosionObjects(context, explosionImages);
     }
   );
 
   peopleRescueInstanceFunction = await async function () {
-    await loadImageFolder(`../gui/gains/peoples/`).then(
-      async (peopleImages) => {
-        if (probability() > 0.9) {
-          var img = peopleImages;
-          peopleRescueInstance.push(
-            new PeopleRescue(context, [
-              [img[0], img[1]],
-              [img[2], img[3]],
-              [img[4], img[5]],
-            ])
-          );
-        }
+    await loadImageFolder(`gui/gains/peoples/`).then(async (peopleImages) => {
+      if (probability() > 0.9) {
+        var img = peopleImages;
+        peopleRescueInstance.push(
+          new PeopleRescue(context, [
+            [img[0], img[1]],
+            [img[2], img[3]],
+            [img[4], img[5]],
+          ])
+        );
       }
-    );
+    });
   };
 
   boxesInstanceFunction = await async function () {
-    await loadImageFolder(`../gui/gains/boxes/`).then(async (peopleImages) => {
+    await loadImageFolder(`gui/gains/boxes/`).then(async (peopleImages) => {
       if (probability() > 0.9) {
         var img = peopleImages;
         boxesInstance.push(
@@ -192,7 +188,7 @@ const adventurePreload = async function () {
   };
 
   powerPlanesObjectInstanceFunction = await async function () {
-    await loadImageFolder(`../gui/powers/planes/`).then(async (powerPlanes) => {
+    await loadImageFolder(`gui/powers/planes/`).then(async (powerPlanes) => {
       powerPlaneSeconds = 0;
       const count = await async function () {
         var currentTime = new Date().getTime();
