@@ -158,7 +158,7 @@ const adventurePreload = async function () {
   );
 
   enemyUfoSingleLineGroupObjectInstanceFunction = await async function () {
-    await loadImageFolder(`/gui/enemies/ufos/`).then(async (enemyUfos) => {
+    await loadImageFolder(`gui/enemies/ufos/`).then(async (enemyUfos) => {
       if (probability() > 0.5) {
         var i = 0;
         var speed = Math.floor(Math.random() * 10) + 5;
