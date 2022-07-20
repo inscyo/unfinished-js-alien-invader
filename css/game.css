@@ -42,8 +42,6 @@ li {
 .popupMessages{
   position: fixed;
   top: 0;
-  background-color: #000;
-  opacity: .7;
   z-index: 100000;
 }
 .game-navbar {

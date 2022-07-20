@@ -1,5 +1,4 @@
 var paused = false;
-
 var playerLost = false;
 var guiLoaded = false;
 var planeBulletlastTime = new Date().getTime();
@@ -40,7 +39,8 @@ window.onload = async function () {
     ) {
       planeBulletlastTime = currentTime;
       planeBulletSeconds++;
-      planeBulletObjectInstanceFunction();
+      if (backgroundObjectsInstanceFunction instanceof Function)
+        planeBulletObjectInstanceFunction();
     }
 
     if (
@@ -55,7 +55,16 @@ window.onload = async function () {
         enemyPlaneObjectInstanceFunction();
       enemyTankObjectInstanceFunction();
     }
-
+    if (
+      currentTime - enemyPlaneSingleLineGrouptLastTime >= 2500 &&
+      !playerLost &&
+      !paused &&
+      guiLoaded
+    ) {
+      enemyPlaneSingleLineGrouptLastTime = currentTime;
+      enemyPlaneSingleLineGroupSeconds++;
+      enemyUfoSingleLineGroupObjectInstanceFunction();
+    }
     /* cloud */
     if (
       currentTime - cloudObjectLastTime >= 1000 &&
@@ -212,6 +221,68 @@ window.onload = async function () {
       }
     }
 
+    /* Single Groupt Enemy here */
+    for (var i = enemyUfoSingleLineGroupObjectInstance.length; i--; ) {
+      enemyUfoSingleLineGroupObjectInstance[i].draw();
+      if (!paused) {
+        if (enemyUfoSingleLineGroupObjectInstance[i].fly()) {
+          enemyUfoSingleLineGroupObjectInstance.splice(i, 1);
+        }
+
+        for (var j = planeBulletObjectInstance.length; j--; ) {
+          if (
+            planeBulletObjectInstance[j].bulletHitsEnemyVehicle(
+              enemyUfoSingleLineGroupObjectInstance[i]
+            )
+          ) {
+            enemyExplosionInstance.draw(
+              timeInSeconds,
+              enemyUfoSingleLineGroupObjectInstance[i].x,
+              enemyUfoSingleLineGroupObjectInstance[i].y
+            );
+            planeBulletObjectInstance.splice(j, 1);
+            enemyUfoSingleLineGroupObjectInstance.splice(i, 1);
+          }
+        }
+
+        if (
+          planeObjectInstance.hitsEnemy(
+            enemyUfoSingleLineGroupObjectInstance[i]
+          )
+        ) {
+          enemyExplosionInstance.draw(
+            timeInSeconds,
+            enemyUfoSingleLineGroupObjectInstance[i].x,
+            enemyUfoSingleLineGroupObjectInstance[i].y
+          );
+          enemyUfoSingleLineGroupObjectInstance.splice(i, 1);
+        }
+
+        for (var j = powerPlanesObjectInstance.length; j--; ) {
+          if (
+            powerPlanesObjectInstance[j].hitsEnemy(
+              enemyUfoSingleLineGroupObjectInstance[i]
+            )
+          ) {
+            enemyExplosionInstance.draw(
+              timeInSeconds,
+              enemyUfoSingleLineGroupObjectInstance[i].x,
+              enemyUfoSingleLineGroupObjectInstance[i].y
+            );
+
+            enemyUfoSingleLineGroupObjectInstance.splice(i, 1);
+
+            enemyExplosionInstance.draw(
+              timeInSeconds,
+              powerPlanesObjectInstance[j].x,
+              powerPlanesObjectInstance[j].y
+            );
+            powerPlanesObjectInstance.splice(j, 1);
+          }
+        }
+      }
+    }
+
     if (guiLoaded) {
       for (var i = planeBulletObjectInstance.length; i--; ) {
         planeBulletObjectInstance[i].draw();
@@ -219,13 +290,20 @@ window.onload = async function () {
           planeBulletObjectInstance.splice(i, 1);
         }
       }
+
       playerLost = planeObjectInstance.stats();
+
       /* Cloud Object here */
       for (var i = cloudObjectInstance.length; i--; ) {
         cloudObjectInstance[i].draw();
         if (!paused) cloudObjectInstance[i].animate();
       }
-      if (!playerLost) planeObjectInstance.draw(timeInSeconds);
+      !playerLost
+        ? planeObjectInstance.draw(timeInSeconds)
+        : (alertMessage("You Lose"),
+          (() => {
+            throw "You Lose";
+          })());
       for (var i = powerPlanesObjectInstance.length; i--; ) {
         powerPlanesObjectInstance[i].draw();
         if (!paused) {

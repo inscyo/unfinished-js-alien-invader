@@ -8,19 +8,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     /> -->
-    <link rel="icon" href="img/Enemy06.png" sizes="16x16 32x32" type="image/png" />
+    <link rel="icon" href="./img/Enemy06.png" sizes="16x16 32x32" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <script src="https://cdn.tailwindcss.com/"></script>
     <link rel="stylesheet" href="./css/font.css" />
     <link rel="stylesheet" href="./css/game.css" />
 </head>
 
 <body>
+    <div class="popupMessages z-50"></div>
     <div class="game-background"></div>
-    <div class="game-content">
+    <div class="game-content z-0">
         <div class="game-app-content">
             <div id="game-app">
                 <div class="game-container">
@@ -30,6 +31,7 @@
         </div>
     </div>
     <script src="./js/loaders.js"></script>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script src="./js/spritesheet.js"></script>
     <!-- game modules -->
     <script src="./modules/background.js"></script>
@@ -40,6 +42,7 @@
     <script src="./modules/object.js"></script>
     <script src="./js/preload.js"></script>
     <script src="./js/render.js"></script>
+
 </body>
 
 </html>

@@ -157,6 +157,27 @@ const adventurePreload = async function () {
     }
   );
 
+  enemyUfoSingleLineGroupObjectInstanceFunction = await async function () {
+    await loadImageFolder(`/gui/enemies/ufos/`).then(async (enemyUfos) => {
+      if (probability() > 0.5) {
+        var i = 0;
+        var speed = Math.floor(Math.random() * 10) + 5;
+        while (i < Math.trunc(primaryWidth / 52)) {
+          enemyUfoSingleLineGroupObjectInstance.push(
+            new EnemyVehicleSkyObject(
+              context,
+              enemyUfos,
+              i * 49.5 + 25,
+              speed,
+              true
+            )
+          );
+          i++;
+        }
+      }
+    });
+  };
+
   peopleRescueInstanceFunction = await async function () {
     await loadImageFolder(`gui/gains/peoples/`).then(async (peopleImages) => {
       if (probability() > 0.9) {
